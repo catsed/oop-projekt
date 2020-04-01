@@ -20,7 +20,7 @@ public class RassHaldjas extends Rass {
     @Override
     public String toString() {
         haljdaVoimed();
-        return super.toString() + " Jõud on " + voimed.get(0) + ". Kiirus on " + voimed.get(1) + ". Täpsus on " + voimed.get(2);
+        return super.toString() + "Jõud on " + voimed.get(0) + ". Kiirus on " + voimed.get(1) + ". Täpsus on " + voimed.get(2);
     }
 
 }

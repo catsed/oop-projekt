@@ -23,6 +23,6 @@ abstract public class Rass {
 
     @Override
     public String toString() {
-        return "Tegelase rass on " + rass;
+        return "Tegelase rass on " + rass + ". ";
     }
 }
