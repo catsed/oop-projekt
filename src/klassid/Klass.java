@@ -11,7 +11,7 @@ abstract public class Klass {
 
     public String valiRelv(List<String> relvad){
         int pikkus = relvad.size();
-        int valiRelv = (int)(Math.random()*pikkus); //peab parandma veel (alati null)
+        int valiRelv = (int)(Math.random()*pikkus);
         return relvad.get(valiRelv);
     }
 
