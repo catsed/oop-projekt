@@ -14,6 +14,10 @@ public class Programm {
         System.out.println("Vali rass. Haldjas/Inimene/Ork/Päkapikk");
         Scanner rassIn = new Scanner(System.in);
         String rass = rassIn.nextLine();
+        System.out.println("Vali klass. Maag/Sõdalane/Vibukütt");
+        Scanner klassIn = new Scanner(System.in);
+        String klass = klassIn.nextLine();
+
         if(rass.equals("Haldjas")){
             RassHaldjas haldjas = new RassHaldjas(rass);
             System.out.println(haldjas.toString());
