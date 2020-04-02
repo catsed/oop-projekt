@@ -16,7 +16,7 @@ public class Klass {
 
     public String setRelv(String[] relvad) {
         Random relvaValik = new Random();
-        return relvad[relvaValik.nextInt(relvad.length)];
+        return relvad[relvaValik.nextInt(relvad.length)]; //valib suvalise relva
     }
     public String getRelv() {
         return relv;

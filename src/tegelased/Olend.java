@@ -34,7 +34,7 @@ abstract public class Olend {
     public double getMana() {
         return mana;
     }
-    public void setMana(double mana) {
+    public void setMana(double mana) { //seda meetodit pole vaja?
         this.elud = mana;
     }
 
@@ -50,7 +50,7 @@ abstract public class Olend {
         return tapsus;
     }
 
-    public boolean isElus() {
+   public boolean isElus() { //pole vaja?
         return elus;
     }
 

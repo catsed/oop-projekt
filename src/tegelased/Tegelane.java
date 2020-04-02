@@ -22,7 +22,7 @@ public class Tegelane extends Olend {
         this.nimi = nimi;
     }
 
-    public Klass getKlass() {
+    public Klass getKlass() { //neid get meetodeid on vaja?
         return klass;
     }
 
@@ -52,7 +52,7 @@ public class Tegelane extends Olend {
 
         System.out.println("(" + super.getElud() + "H) " + nimi + " ründab, kasutades relva " + klass.getRelv() + ".");
 
-        if (meleeRelvad.contains(relv)) {
+        if (meleeRelvad.contains(relv)) { //rünnaku tugevus sõltub tegelase jõust või manast
             elusidMaha = rass.getJoud() / 10.0;
         } else if (laskeRelvad.contains(relv)) {
             if (Math.random() > rass.getTapsus() / 100.0) {

@@ -6,7 +6,7 @@ public class Karu extends Olend {
     }
 
     @Override
-    public double runnak(double vastaseElud) {
+    public double runnak(double vastaseElud) { //Meetod karu rünnaku jaoks
         System.out.println("(" + super.getElud() + "H) Karu ründab.");
 
         double elusidMaha = super.getJoud() / 10.0;

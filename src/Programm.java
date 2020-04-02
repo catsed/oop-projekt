@@ -15,10 +15,10 @@ public class Programm {
         Random random = new Random();
         String[] nimed = new String[]{"Icathmus", "Tuline", "Yuvia", "Trikos", "Umbra", "Iunas", "Jag", "Marik", "Tunis", "Pokin", "Galli"};
         String[] sood = new String[]{"Mees", "Naine"};
-        Rass[] rassid = new Rass[]{new RassInimene(), new RassHaldjas(), new RassOrk(), new RassPakapikk()};
-        Klass[] klassid = new Klass[]{new KlassSodalane(), new KlassVibukutt(), new KlassMaag(), new KlassLinnaelanik()};
+        Rass[] rassid = new Rass[]{new RassInimene(), new RassHaldjas(), new RassOrk(), new RassPakapikk()}; //Kõik rassid
+        Klass[] klassid = new Klass[]{new KlassSodalane(), new KlassVibukutt(), new KlassMaag(), new KlassLinnaelanik()}; //Kõik klassid
 
-        return new Tegelane(klassid[random.nextInt(klassid.length)],
+        return new Tegelane(klassid[random.nextInt(klassid.length)], //tegelased linna
                 rassid[random.nextInt(rassid.length)],
                 random.nextInt(85)+15,
                 sood[random.nextInt(sood.length)],
@@ -62,7 +62,7 @@ public class Programm {
         System.out.println("\tOrk - 'barbarite' rass, väga tugev, aga kõiges muus mitte eriti osav.");
         System.out.println("\tPäkapikk - terava mõistusega rass, imeline täpsus, kõiges muus mitte nii osav.");
         System.out.println("\nMilline saab olema sinu tegelase rass?");
-        while (!sc.hasNext("(?i)(i(nimene)?|h(aldjas)?|o(rk)?|p(äkapikk)?)")) {
+        while (!sc.hasNext("(?i)(i(nimene)?|h(aldjas)?|o(rk)?|p(äkapikk)?)")) { //ainult esitäht on ka lubatud kirjutada
             System.out.println("Proovi uuesti.");
             sc.next();
         }
@@ -83,7 +83,7 @@ public class Programm {
         System.out.println("\nHästi! Sinu tegelane on loodud!");
 
         Rass rass;
-        switch(rassStr.toLowerCase()) {
+        switch(rassStr.toLowerCase()) { //rassi määramine
             case "i":
             case "inimene":
                 rass = new RassInimene();
@@ -106,7 +106,7 @@ public class Programm {
         }
 
         Klass klass;
-        switch(klassStr.toLowerCase()) {
+        switch(klassStr.toLowerCase()) { //klassi määramine
             case "s":
             case "sõdalane":
                 klass = new KlassSodalane();
@@ -153,7 +153,7 @@ public class Programm {
         }
         String runnatavStr = sc.next().toLowerCase();
 
-        Olend runnatav = null;
+        Olend runnatav = null;  //vaadatakse keda rünnatakse
         if (runnatavStr.equals(suvaline1.getNimi().toLowerCase())) {
             runnatav = suvaline1;
         } else if (runnatavStr.equals(suvaline2.getNimi().toLowerCase())) {
@@ -164,7 +164,7 @@ public class Programm {
 
         System.out.println("Rünnak algab.\n");
         while (true) {
-            if (mangija.getElud() == 0) {
+            if (mangija.getElud() == 0) {  //rünnak kestab kuni kumbki sureb
                 System.out.println("Sa surid!");
                 break;
             }
@@ -172,7 +172,7 @@ public class Programm {
                 System.out.println("Sa võitsid!");
                 break;
             }
-            runnatav.setElud(mangija.runnak(runnatav.getElud()));
+            runnatav.setElud(mangija.runnak(runnatav.getElud())); //rünnatakse kordamööda
             Thread.sleep(1000);
             mangija.setElud(runnatav.runnak(mangija.getElud()));
             Thread.sleep(1000);
