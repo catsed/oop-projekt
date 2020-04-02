@@ -1,4 +1,4 @@
-package tegelased;
+package olendid;
 
 import klassid.Klass;
 import rassid.Rass;
@@ -11,35 +11,13 @@ public class Tegelane extends Olend {
     private Rass rass;
     private int vanus;
     private String sugu;
-    private String nimi;
 
     public Tegelane(Klass klass, Rass rass, int vanus, String sugu, String nimi) {
-        super(rass.getElud(), rass.getMana(), rass.getKiirus(), rass.getJoud(), rass.getTapsus());
+        super(rass.getElud(), rass.getMana(), rass.getKiirus(), rass.getJoud(), rass.getTapsus(), nimi);
         this.klass = klass;
         this.rass = rass;
         this.vanus = vanus;
         this.sugu = sugu;
-        this.nimi = nimi;
-    }
-
-    public Klass getKlass() { //neid get meetodeid on vaja?
-        return klass;
-    }
-
-    public Rass getRass() {
-        return rass;
-    }
-
-    public int getVanus() {
-        return vanus;
-    }
-
-    public String getSugu() {
-        return sugu;
-    }
-
-    public String getNimi() {
-        return nimi;
     }
 
     public double runnak(double vastaseElud) {
@@ -50,30 +28,31 @@ public class Tegelane extends Olend {
         List<String> laskeRelvad = Arrays.asList(Klass.LASKE_RELVAD);
         List<String> maagiaRelvad = Arrays.asList(Klass.MAAGIA_RELVAD);
 
-        System.out.println("(" + super.getElud() + "H) " + nimi + " ründab, kasutades relva " + klass.getRelv() + ".");
+        System.out.printf("(%.1fHP) %s ründab, kasutades relva %s.\n", super.getElud(), super.getNimi(), klass.getRelv());
 
-        if (meleeRelvad.contains(relv)) { //rünnaku tugevus sõltub tegelase jõust või manast
-            elusidMaha = rass.getJoud() / 10.0;
+        if (meleeRelvad.contains(relv)) { // rünnaku tugevus sõltub tegelase jõust või manast
+            elusidMaha = rass.getJoud() / 2.0 * Math.random();
         } else if (laskeRelvad.contains(relv)) {
             if (Math.random() > rass.getTapsus() / 100.0) {
-                System.out.println(nimi + " lasi mööda.");
+                System.out.printf("(%.1fHP) %s lasi mööda.\n", super.getElud(), super.getNimi());
             } else {
-                elusidMaha = rass.getJoud() / 10.0;
+                elusidMaha = rass.getJoud() / 2.0 * rass.getTapsus() / 100.0;
             }
         } else if (maagiaRelvad.contains(relv)) {
-            elusidMaha = rass.getMana() / 10.0;
+            elusidMaha = rass.getMana() / 2.0 * Math.random();
         }
 
-        if (vastaseElud - elusidMaha > 0) {
-            return vastaseElud - elusidMaha;
-        } else {
-            return 0.0;
-        }
+        if (elusidMaha > vastaseElud)
+            elusidMaha = vastaseElud;
+
+        System.out.printf("(%.1fHP) %s rünnak vähendab vastase elusid %.1f HP võrra.\n", super.getElud(), super.getNimi(), elusidMaha);
+
+        return vastaseElud - elusidMaha;
     }
 
     @Override
     public String toString() {
-        return nimi +
+        return super.getNimi() +
                 "\n\tSugu: " + sugu +
                 "\n\tVanus: " + vanus +
                 "\n\tRass: " + rass.toString() +

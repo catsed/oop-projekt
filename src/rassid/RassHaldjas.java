@@ -5,7 +5,7 @@ public class RassHaldjas extends Rass {
     private double manaKordaja = 1.5;
     private double joudKordaja = 0.3;
     private double kiirusKordaja = 0.8;
-    private double tapsusKordaja = 0.9;
+    private double tapsusKordaja = 0.65;
 
     public RassHaldjas() {
         super("Haldjas");

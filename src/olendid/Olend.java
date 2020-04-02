@@ -1,4 +1,4 @@
-package tegelased;
+package olendid;
 
 abstract public class Olend {
     private double elud;
@@ -7,21 +7,24 @@ abstract public class Olend {
     private double joud;
     private double tapsus;
     private boolean elus = true;
+    private String nimi;
 
-    public Olend(double elud, double mana, double kiirus, double joud, double tapsus) {
+    public Olend(double elud, double mana, double kiirus, double joud, double tapsus, String nimi) {
         this.elud = elud;
         this.mana = mana;
         this.kiirus = kiirus;
         this.joud = joud;
         this.tapsus = tapsus;
+        this.nimi = nimi;
     }
-    public Olend(double elud, double mana, double kiirus, double joud, double tapsus, boolean elus) {
+    public Olend(double elud, double mana, double kiirus, double joud, double tapsus, String nimi, boolean elus) {
         this.elud = elud;
         this.mana = mana;
         this.kiirus = kiirus;
         this.joud = joud;
         this.tapsus = tapsus;
         this.elus = elus;
+        this.nimi = nimi;
     }
 
     public double getElud() {
@@ -33,9 +36,6 @@ abstract public class Olend {
 
     public double getMana() {
         return mana;
-    }
-    public void setMana(double mana) { //seda meetodit pole vaja?
-        this.elud = mana;
     }
 
     public double getKiirus() {
@@ -50,8 +50,8 @@ abstract public class Olend {
         return tapsus;
     }
 
-   public boolean isElus() { //pole vaja?
-        return elus;
+    public String getNimi() {
+        return nimi;
     }
 
     public abstract double runnak(double vastaseElud);

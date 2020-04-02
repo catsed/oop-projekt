@@ -4,25 +4,40 @@
 
 import rassid.*;
 import klassid.*;
-import tegelased.*;
+import olendid.*;
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class Programm {
 
-    static Tegelane suvalineTegelane() {
+    static Tegelane suvalineTegelane() { // meetod, mis genereerib suvalise tegelase
         Random random = new Random();
         String[] nimed = new String[]{"Icathmus", "Tuline", "Yuvia", "Trikos", "Umbra", "Iunas", "Jag", "Marik", "Tunis", "Pokin", "Galli"};
         String[] sood = new String[]{"Mees", "Naine"};
         Rass[] rassid = new Rass[]{new RassInimene(), new RassHaldjas(), new RassOrk(), new RassPakapikk()}; //Kõik rassid
         Klass[] klassid = new Klass[]{new KlassSodalane(), new KlassVibukutt(), new KlassMaag(), new KlassLinnaelanik()}; //Kõik klassid
 
-        return new Tegelane(klassid[random.nextInt(klassid.length)], //tegelased linna
+        return new Tegelane(klassid[random.nextInt(klassid.length)],
                 rassid[random.nextInt(rassid.length)],
                 random.nextInt(85)+15,
                 sood[random.nextInt(sood.length)],
                 nimed[random.nextInt(nimed.length)]);
+    }
+
+    static boolean eluKontroll(double mangija, double vastane) {
+        System.out.println();
+
+        if (mangija == 0) {
+            System.out.println("Sa surid!");
+            return true;
+        }
+        if (vastane == 0) {
+            System.out.println("Sa võitsid!");
+            return true;
+        }
+
+        return false;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -124,16 +139,19 @@ public class Programm {
                 break;
         }
 
+        // MÄNGIJA TEGELASE INFO //
+
         System.out.println("Sinu tegelase info:");
         Tegelane mangija = new Tegelane(klass, rass, vanus, (sugu.equals("M") ? "Mees" : "Naine"), nimi);
         System.out.println(mangija.toString());
         System.out.println("\nKui oled rahul oma tegelasega, kirjuta 'jätka', et jätkata.");
-        while (!sc.hasNext("(?i)jätka")) {
+        while (!sc.hasNext("(?i)jätka"))
             sc.next();
-        }
-        String s = sc.next();
+        String s = sc.next(); // püüab kinni sisendi, tegelikult seda kasutada pole vaja, aga muidu segab hilisemaid sisendeid
 
         System.out.println("\n-----------------------------------------------\n");
+
+        // TEGELASTE GENEREERIMINE JA VÄLJASTAMINE //
 
         Tegelane suvaline1 = suvalineTegelane();
         Tegelane suvaline2 = suvalineTegelane();
@@ -141,41 +159,44 @@ public class Programm {
 
         Olend[] olendid = new Olend[]{suvaline1, suvaline2, karu};
 
+        StringBuilder kontrollMuster = new StringBuilder(); // see tuleb hiljem kasuks scanner sisendi kontrollimiseks
         System.out.println("Asud nüüd linnas. Linnas on veel järgmised olendid:");
         for (Olend olend : olendid) {
             System.out.println("\n" + olend.toString());
+            kontrollMuster.append(olend.getNimi() + "|");
         }
+
         System.out.println("\n-----------------------------------------------\n");
+
+        // RÜNDAMISE OSA //
+
         System.out.println("Keda sooviksid rünnata?");
-        while (!sc.hasNext("(?i)("+suvaline1.getNimi()+"|"+suvaline2.getNimi()+"|karu)")) {
+        while (!sc.hasNext("("+kontrollMuster.toString()+")")) {
             System.out.println("Proovi uuesti.");
             sc.next();
         }
-        String runnatavStr = sc.next().toLowerCase();
+        String runnatavStr = sc.next();
 
         Olend runnatav = null;  //vaadatakse keda rünnatakse
-        if (runnatavStr.equals(suvaline1.getNimi().toLowerCase())) {
-            runnatav = suvaline1;
-        } else if (runnatavStr.equals(suvaline2.getNimi().toLowerCase())) {
-            runnatav = suvaline2;
-        } else if (runnatavStr.equals("karu")) {
-            runnatav = karu;
+        for (Olend olend : olendid) {
+            if (runnatavStr.equals(olend.getNimi())) {
+                runnatav = olend;
+            }
         }
 
         System.out.println("Rünnak algab.\n");
-        while (true) {
-            if (mangija.getElud() == 0) {  //rünnak kestab kuni kumbki sureb
-                System.out.println("Sa surid!");
+        while (true) { //rünnatakse kordamööda
+            runnatav.setElud(mangija.runnak(runnatav.getElud()));
+            Thread.sleep(1000 - (long)runnatav.getKiirus() * 2);
+
+            if (eluKontroll(mangija.getElud(), runnatav.getElud()))
                 break;
-            }
-            if (runnatav.getElud() == 0) {
-                System.out.println("Sa võitsid!");
-                break;
-            }
-            runnatav.setElud(mangija.runnak(runnatav.getElud())); //rünnatakse kordamööda
-            Thread.sleep(1000);
+
             mangija.setElud(runnatav.runnak(mangija.getElud()));
-            Thread.sleep(1000);
+            Thread.sleep(1000 - (long)mangija.getKiirus() * 2);
+
+            if (eluKontroll(mangija.getElud(), runnatav.getElud()))
+                break;
         }
 
     }

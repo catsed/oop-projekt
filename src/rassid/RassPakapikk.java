@@ -5,7 +5,7 @@ public class RassPakapikk extends Rass {
     private double manaKordaja = 0.5;
     private double joudKordaja = 0.7;
     private double kiirusKordaja = 0.5;
-    private double tapsusKordaja = 1.7;
+    private double tapsusKordaja = 0.95;
 
     public RassPakapikk() {
         super("Päkapikk");
