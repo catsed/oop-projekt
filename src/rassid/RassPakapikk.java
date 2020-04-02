@@ -1,25 +1,14 @@
 package rassid;
 
-import java.util.List;
-
 public class RassPakapikk extends Rass {
-    private List<Double> voimed;
-    private double joud = 0.7;
-    private double kiirus = 0.5;
-    private double tapsus = 0.9;
+    private double eludKordaja = 1.0;
+    private double manaKordaja = 0.5;
+    private double joudKordaja = 0.7;
+    private double kiirusKordaja = 0.5;
+    private double tapsusKordaja = 1.7;
 
-    public RassPakapikk(String rass) {
-        super(rass);
-    }
-
-    public List<Double> pakapikuVoimed() {
-        this.voimed = super.getVoimed(joud, kiirus, tapsus);
-        return voimed;
-    }
-
-    @Override
-    public String toString() {
-        pakapikuVoimed();
-        return super.toString() + "Jõud on " + voimed.get(0) + ". Kiirus on " + voimed.get(1) + ". Täpsus on " + voimed.get(2);
+    public RassPakapikk() {
+        super("Päkapikk");
+        super.setVoimed(eludKordaja, manaKordaja, joudKordaja, kiirusKordaja, tapsusKordaja);
     }
 }

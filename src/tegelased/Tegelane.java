@@ -1,59 +1,88 @@
 package tegelased;
 
-import klassid.KlassMaag;
-import klassid.KlassSodalane;
-import klassid.KlassVibukutt;
-import rassid.RassHaldjas;
-import rassid.RassInimene;
-import rassid.RassOrk;
-import rassid.RassPakapikk;
+import klassid.Klass;
+import rassid.Rass;
 
-abstract public class Tegelane {
-    private String klass;
-    private String rass;
+import java.util.Arrays;
+import java.util.List;
 
-    public Tegelane(String klass, String rass) {
+public class Tegelane extends Olend {
+    private Klass klass;
+    private Rass rass;
+    private int vanus;
+    private String sugu;
+    private String nimi;
+
+    public Tegelane(Klass klass, Rass rass, int vanus, String sugu, String nimi) {
+        super(rass.getElud(), rass.getMana(), rass.getKiirus(), rass.getJoud(), rass.getTapsus());
         this.klass = klass;
         this.rass = rass;
+        this.vanus = vanus;
+        this.sugu = sugu;
+        this.nimi = nimi;
     }
 
-    public String getKlass() {
+    public Klass getKlass() {
         return klass;
     }
 
-    public String getRass() {
+    public Rass getRass() {
         return rass;
     }
 
-    private void looTegelane(){
-        if(rass.equals("Haldjas")){
-            RassHaldjas haldjas = new RassHaldjas(rass);
-            System.out.println(haldjas.toString());
+    public int getVanus() {
+        return vanus;
+    }
+
+    public String getSugu() {
+        return sugu;
+    }
+
+    public String getNimi() {
+        return nimi;
+    }
+
+    public double runnak(double vastaseElud) {
+        double elusidMaha = 0.0;
+        String relv = klass.getRelv();
+
+        List<String> meleeRelvad = Arrays.asList(Klass.MELEE_RELVAD);
+        List<String> laskeRelvad = Arrays.asList(Klass.LASKE_RELVAD);
+        List<String> maagiaRelvad = Arrays.asList(Klass.MAAGIA_RELVAD);
+
+        System.out.println("(" + super.getElud() + "H) " + nimi + " ründab, kasutades relva " + klass.getRelv() + ".");
+
+        if (meleeRelvad.contains(relv)) {
+            elusidMaha = rass.getJoud() / 10.0;
+        } else if (laskeRelvad.contains(relv)) {
+            if (Math.random() > rass.getTapsus() / 100.0) {
+                System.out.println(nimi + " lasi mööda.");
+            } else {
+                elusidMaha = rass.getJoud() / 10.0;
+            }
+        } else if (maagiaRelvad.contains(relv)) {
+            elusidMaha = rass.getMana() / 10.0;
         }
-        if(rass.equals("Ork")){
-            RassOrk ork = new RassOrk(rass);
-            System.out.println(ork.toString());
-        }
-        if(rass.equals("Inimene")){
-            RassInimene inimene = new RassInimene(rass);
-            System.out.println(inimene.toString());
-        }
-        if(rass.equals("Päkapikk")){
-            RassPakapikk pakapikk = new RassPakapikk(rass);
-            System.out.println(pakapikk.toString());
-        }
-        if(klass.equals("Maag")){
-            KlassMaag maag = new KlassMaag(klass);
-            System.out.println(maag.toString());
-        }
-        if(klass.equals("Sõdalane")){
-            KlassSodalane sodalane = new KlassSodalane(klass);
-            System.out.println(sodalane.toString());
-        }
-        if(klass.equals("Vibukütt")){
-            KlassVibukutt vibukutt = new KlassVibukutt(klass);
-            System.out.println(vibukutt.toString());
+
+        if (vastaseElud - elusidMaha > 0) {
+            return vastaseElud - elusidMaha;
+        } else {
+            return 0.0;
         }
     }
 
+    @Override
+    public String toString() {
+        return nimi +
+                "\n\tSugu: " + sugu +
+                "\n\tVanus: " + vanus +
+                "\n\tRass: " + rass.toString() +
+                "\n\tKlass: " + klass.toString() +
+                "\n\tRelv: " + klass.getRelv() +
+                "\n\tElud: " + super.getElud() +
+                "\n\tMana: " + super.getMana() +
+                "\n\tJõud: " + super.getJoud() +
+                "\n\tKiirus: " + super.getKiirus() +
+                "\n\tTäpsus: " + super.getTapsus();
+    }
 }

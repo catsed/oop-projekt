@@ -1,28 +1,43 @@
 package rassid;
 
-import java.util.ArrayList;
-import java.util.List;
-
-abstract public class Rass {
+public class Rass {
     private String rass;
-    List<Double> voimed = new ArrayList<>();
+    private double elud = 100.0;
+    private double mana = 100.0;
+    private double joud = 100.0;
+    private double kiirus = 100.0;
+    private double tapsus = 100.0;
 
     public Rass(String rass) {
         this.rass = rass;
     }
 
-    public List<Double> getVoimed(double jouKordaja, double kiiruseKordaja, double tapsuseKordaja) {
-        for(int i=0; i<3; i++){
-            voimed.add(100.0);
-        }
-        voimed.set(0,voimed.get(0)*jouKordaja); //muudab jõu vastavaks rassile
-        voimed.set(1, voimed.get(1)*kiiruseKordaja); //muudab kiiruse vastavaks rassile
-        voimed.set(2, voimed.get(2)*tapsuseKordaja); //muudab tapsuse vastavaks rassile
-        return voimed; // list(jõud, kiirus, täpsus)
+    public void setVoimed(double eludKordaja, double manaKordaja, double jouKordaja, double kiiruseKordaja, double tapsuseKordaja) {
+        elud *= eludKordaja; // muudab elud vastavaks rassile
+        mana *= manaKordaja; // muudab mana vastavaks rassile
+        joud *= jouKordaja; // muudab jõu vastavaks rassile
+        kiirus *= kiiruseKordaja; // muudab kiiruse vastavaks rassile
+        tapsus *= tapsuseKordaja; // muudab tapsuse vastavaks rassile
+    }
+
+    public double getElud() {
+        return elud;
+    }
+    public double getMana() {
+        return mana;
+    }
+    public double getJoud() {
+        return joud;
+    }
+    public double getKiirus() {
+        return kiirus;
+    }
+    public double getTapsus() {
+        return tapsus;
     }
 
     @Override
     public String toString() {
-        return "Tegelase rass on " + rass + ". ";
+        return rass;
     }
 }

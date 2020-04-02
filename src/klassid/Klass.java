@@ -1,22 +1,29 @@
 package klassid;
 
-import java.util.List;
+import java.util.Random;
 
-abstract public class Klass {
+public class Klass {
+    public static String[] MELEE_RELVAD = new String[]{"Rusikad", "Mõõk", "Kahekäemõõk", "Pistoda", "Kirves"};
+    public static String[] LASKE_RELVAD = new String[]{"Vibu", "Ammu", "Viskenuga", "Oda"};
+    public static String[] MAAGIA_RELVAD = new String[]{"Sau", "Võlukepp"};
+
+    protected String relv = "Rusikad";
     private String klass;
 
     public Klass(String klass) {
         this.klass = klass;
     }
 
-    public String valiRelv(List<String> relvad){
-        int pikkus = relvad.size();
-        int valiRelv = (int)(Math.random()*pikkus);
-        return relvad.get(valiRelv);
+    public String setRelv(String[] relvad) {
+        Random relvaValik = new Random();
+        return relvad[relvaValik.nextInt(relvad.length)];
+    }
+    public String getRelv() {
+        return relv;
     }
 
     @Override
     public String toString() {
-        return "Tegelase klass on " + klass + ".";
+        return klass;
     }
 }
