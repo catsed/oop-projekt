@@ -1,4 +1,4 @@
-package klassid;
+package projekt.klassid;
 
 import java.util.Random;
 

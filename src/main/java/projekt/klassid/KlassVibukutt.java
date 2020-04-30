@@ -1,4 +1,4 @@
-package klassid;
+package projekt.klassid;
 
 public class KlassVibukutt extends Klass {
     public KlassVibukutt() {

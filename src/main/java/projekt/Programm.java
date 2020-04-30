@@ -1,10 +1,12 @@
+package projekt;
+
 /*
 * Peaklass
  */
 
-import rassid.*;
-import klassid.*;
-import olendid.*;
+import projekt.olendid.*;
+import projekt.klassid.*;
+import projekt.rassid.*;
 
 import java.util.Random;
 import java.util.Scanner;

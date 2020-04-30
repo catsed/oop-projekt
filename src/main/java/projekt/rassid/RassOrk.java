@@ -1,4 +1,4 @@
-package rassid;
+package projekt.rassid;
 
 public class RassOrk extends Rass {
     private double eludKordaja = 0.9;

@@ -1,4 +1,4 @@
-package klassid;
+package projekt.klassid;
 
 public class KlassSodalane extends Klass {
     public KlassSodalane() {

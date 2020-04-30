@@ -1,4 +1,4 @@
-package olendid;
+package projekt.olendid;
 
 abstract public class Olend {
     private double elud;

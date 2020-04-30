@@ -1,4 +1,4 @@
-package rassid;
+package projekt.rassid;
 
 public class RassPakapikk extends Rass {
     private double eludKordaja = 1.0;

@@ -1,4 +1,4 @@
-package rassid;
+package projekt.rassid;
 
 public class Rass {
     private String rass;

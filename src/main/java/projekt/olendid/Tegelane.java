@@ -1,7 +1,7 @@
-package olendid;
+package projekt.olendid;
 
-import klassid.Klass;
-import rassid.Rass;
+import projekt.klassid.Klass;
+import projekt.rassid.Rass;
 
 import java.util.Arrays;
 import java.util.List;

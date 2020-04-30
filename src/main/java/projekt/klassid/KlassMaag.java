@@ -1,4 +1,4 @@
-package klassid;
+package projekt.klassid;
 
 public class KlassMaag extends Klass {
     public KlassMaag() {

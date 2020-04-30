@@ -1,4 +1,4 @@
-package olendid;
+package projekt.olendid;
 
 public class Karu extends Olend {
     public Karu() {
