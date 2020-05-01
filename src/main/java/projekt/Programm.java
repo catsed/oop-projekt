@@ -65,17 +65,11 @@ public class Programm extends Application {
 
      */
 
-    public VBox kysimused(Stage primaryStage) throws IOException {
-        Text text, text1, text2;
-        text = new Text("Tere tulemast! See on Marki ja Saskia projekt.");
-        text1 = new Text("See on väike rollimäng, kus saad luua oma tegelase ning proovida ründamist." + "\n-----------------------------------------------\n");
-        text2 = new Text("Alustuseks, mis on sinu tegelase nimi?");
+    public VBox kysimused() throws IOException {
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(text, text1, text2);
-
-
+        Text text = new Text("Alustuseks, mis on sinu tegelase nimi?");
         TextField tekst = new TextField();
-        vBox.getChildren().add(tekst);
+        vBox.getChildren().addAll(text, tekst);
 
         tekst.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -152,7 +146,8 @@ public class Programm extends Application {
                                 button1.setOnMousePressed(event2 -> {
                                     vBox.getChildren().clear();
                                     try {
-                                        start(primaryStage);
+                                        vBox.getChildren().clear();
+                                        vBox.getChildren().add(kysimused());
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -160,15 +155,21 @@ public class Programm extends Application {
                                 button.setOnMousePressed(event2 -> {
                                     List<String> tegelaseInfo = new ArrayList<>();
                                     tegelaseInfo.add("Nimi: "+nimi); // tegelase nimi [0]
+
                                     if(String.valueOf(toggleGroup.getSelectedToggle()).contains("Naine"))
                                         tegelaseInfo.add("Sugu: naine"); //tegelase sugu kui naine[1]
+
                                     if(String.valueOf(toggleGroup.getSelectedToggle()).contains("Mees"))
                                         tegelaseInfo.add("Sugu: mees"); //sugu kui mees [1]
+
                                     tegelaseInfo.add(String.valueOf(label1.getText())); //vanus [2]
+
                                     RadioButton rass = (RadioButton)toggleGroup1.getSelectedToggle();
                                     tegelaseInfo.add("Rass: "+(rass.getText().split(" "))[0]); //rass [3]
+
                                     RadioButton klass = (RadioButton)toggleGroup2.getSelectedToggle();
                                     tegelaseInfo.add("Klass: "+(klass.getText().split(" "))[0]); //klass [4]
+
                                     File file = new File("tegelased.txt");
                                     try (BufferedWriter väljundvoog = new BufferedWriter(new FileWriter(file, true))) {
                                         väljundvoog.write("-----------------\n");
@@ -193,14 +194,70 @@ public class Programm extends Application {
     }
 
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
-            double korgus = primaryStage.getHeight();
-        });
-        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            double laius = primaryStage.getWidth();
+        VBox vBox = new VBox();
+        Button button, button1;
+
+        button = new Button("Soovin kasutada juba varem loodud tegelast");
+        button1 = new Button("Loon uue tegelase");
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(button1,button);
+        Text text, text1;
+        text = new Text("Tere tulemast! See on Marki ja Saskia projekt.");
+        text1 = new Text("See on väike rollimäng, kus saad luua oma tegelase ning proovida ründamist." + "\n-----------------------------------------------");
+        vBox.getChildren().addAll(text, text1, hBox);
+
+        button1.setOnMousePressed(event -> {
+            button1.setDisable(true);
+            button.setDisable(true);
+            try {
+                vBox.getChildren().add(kysimused());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
-        VBox vBox = kysimused(primaryStage);
+        button.setOnMousePressed(event -> {
+            button.setDisable(true);
+            button1.setDisable(true);
+            vBox.getChildren().add(new Text("Sisesta oma tegelase nimi"));
+            TextField textField = new TextField();
+            vBox.getChildren().add(textField);
+
+            textField.setOnKeyPressed(event1 -> {
+                if(event1.getCode() == KeyCode.ENTER){
+                    textField.setDisable(true);
+                    String nimi = textField.getText();
+                    try(
+                            InputStream inputStream = new FileInputStream("tegelased.txt");
+                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))
+                    ) {
+                        String rida = bufferedReader.readLine();
+                        while (rida!= null){
+                            if(rida.contains(nimi)){
+                                rida = bufferedReader.readLine();
+                                String sugu = rida.replace("Sugu: ", "");
+                                rida = bufferedReader.readLine();
+                                int vanus = Integer.parseInt(rida.replace("Vanus: ", ""));
+                                rida = bufferedReader.readLine();
+                                String rass = rida.replace("Rass: ", "");
+                                rida = bufferedReader.readLine();
+                                String klass = rida.replace("Klass: ", "");
+                                break;
+                            }
+                            else{
+                                rida = bufferedReader.readLine();
+                                if(rida!= null){
+                                    rida = bufferedReader.readLine();
+                                }
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        });
 
         Group juur = new Group();
         juur.getChildren().addAll(vBox);
