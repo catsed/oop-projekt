@@ -31,6 +31,6 @@ public class Karu extends Olend {
 
     @Override
     public String toString() {
-        return "Karu - loom";
+        return "Karu";
     }
 }

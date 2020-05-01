@@ -68,8 +68,8 @@ public class Tegelane extends Olend {
 
     @Override
     public String toString() {
-        return "Nimi: " + super.getNimi() + "\n"
-                + "Sugu: " + sugu + "\n" +
+        return "Nimi: " + super.getNimi() + "\n" +
+                "Sugu: " + sugu + "\n" +
                 "Vanus: "+ vanus + " aastane " + "\n" +
                 "Rass: " + rass.toString() + "\n" +
                 "Klass: "+ klass.toString();

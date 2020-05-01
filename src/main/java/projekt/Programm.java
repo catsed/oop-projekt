@@ -23,8 +23,6 @@ import projekt.klassid.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-
 
 public class Programm extends Application {
 
@@ -206,7 +204,7 @@ public class Programm extends Application {
         Stage loomineLava = new Stage();
         VBox loomine = new VBox(10);
         loomine.setMinWidth(650);
-        loomine.setMinHeight(400);
+        loomine.setMinHeight(200);
         loomine.setPadding(new Insets(10, 10, 10, 10));
 
         Button nuppUus = new Button("Loon uue tegelase");
@@ -230,8 +228,8 @@ public class Programm extends Application {
             nuppVana.setDisable(true);
 
             // NIMI
-            Text nimiKus = new Text("Alustuseks, mis on sinu tegelase nimi?");
-            nimiKus.setFont(Font.font("system", FontWeight.BOLD, 15));
+            Text nimiKus = new Text("\nAlustuseks, mis on sinu tegelase nimi?");
+            nimiKus.setFont(Font.font("system", FontWeight.BOLD, 13));
             TextField nimiVas = new TextField();
             nimiVas.setMaxWidth(650);
             loomine.getChildren().addAll(nimiKus, nimiVas);
@@ -244,7 +242,7 @@ public class Programm extends Application {
 
                     // SUGU
                     Text suguKus = new Text("Mis on sinu tegelase sugu?");
-                    suguKus.setFont(Font.font("system", FontWeight.BOLD, 15));
+                    suguKus.setFont(Font.font("system", FontWeight.BOLD, 13));
                     RadioButton suguMees, suguNaine;
                     suguMees = new RadioButton("Mees");
                     suguNaine = new RadioButton("Naine");
@@ -261,7 +259,7 @@ public class Programm extends Application {
 
                         // VANUS
                         Text vanusKus = new Text("\nKui vana sinu tegelane on?");
-                        vanusKus.setFont(Font.font("system", FontWeight.BOLD, 15));
+                        vanusKus.setFont(Font.font("system", FontWeight.BOLD, 13));
                         Slider vanusSlider = new Slider(1, 100, 1);
                         vanusSlider.setShowTickMarks(true);
                         vanusSlider.setShowTickLabels(true);
@@ -277,7 +275,7 @@ public class Programm extends Application {
 
                             // RASS
                             Text rassKus = new Text("\nHästi! Nüüd valime sinu rassi.");
-                            rassKus.setFont(Font.font("system", FontWeight.BOLD, 15));
+                            rassKus.setFont(Font.font("system", FontWeight.BOLD, 13));
                             RadioButton valikInimene, valikHaldjas, valikOrk, valikPakapikk;
                             valikInimene = new RadioButton("Inimene - kõige tavalisem rass, võimete poolest kõiges keskmine, kuid mitte milleski parim.");
                             valikHaldjas = new RadioButton("Haldjas - maagiline rass, võimete poolest parim maagias, jõu poolest nõrk.");
@@ -298,7 +296,7 @@ public class Programm extends Application {
 
                                 // KLASS
                                 Text klassKus = new Text("\nHästi! Nüüd valime sinu klassi. Hoia meeles, milles sinu rass parim on!");
-                                klassKus.setFont(Font.font("system", FontWeight.BOLD, 15));
+                                klassKus.setFont(Font.font("system", FontWeight.BOLD, 13));
                                 RadioButton valikSodalane, valikVibukutt, valikMaag;
                                 valikSodalane = new RadioButton("Sõdalane - saab teha meleerünnakuid.");
                                 valikVibukutt = new RadioButton("Vibukütt - saab teha laskerünnakuid.");
@@ -316,8 +314,8 @@ public class Programm extends Application {
                                     });
 
                                     // LOODUD
-                                    Text loodudTekst = new Text("\nHästi! Sinu tegelane on loodud!\nKui sulle su tegelane ei sobi, võid alustada otsast peale!\n");
-                                    loodudTekst.setFont(Font.font("system", FontWeight.BOLD, 15));
+                                    Text loodudTekst = new Text("\nHästi! Sinu tegelane on loodud!\n");
+                                    loodudTekst.setFont(Font.font("system", FontWeight.BOLD, 13));
                                     loomine.getChildren().add(loodudTekst);
 
                                     HBox loodudNupud = new HBox(10);
@@ -368,7 +366,7 @@ public class Programm extends Application {
             nuppVana.setDisable(true);
 
             Text nimiKus = new Text("Sisesta oma tegelase nimi");
-            nimiKus.setFont(Font.font("system", FontWeight.BOLD, 15));
+            nimiKus.setFont(Font.font("system", FontWeight.BOLD, 13));
 
             loomine.getChildren().add(nimiKus);
             TextField tekstiAla = new TextField();
@@ -417,7 +415,7 @@ public class Programm extends Application {
         loomineLava.setScene(loomineStseen);
         loomineLava.setResizable(false);
         loomineLava.setWidth(700);
-        loomineLava.setHeight(400);
+        loomineLava.setHeight(700);
         loomineLava.setTitle("Rollimäng");
         loomineLava.show();
 
@@ -474,7 +472,8 @@ public class Programm extends Application {
 
             ListView<Olend> elanikeList = new ListView(elanikud);
             elanikeList.setOrientation(Orientation.VERTICAL);
-            elanikeList.setPrefSize(635, 330);
+            elanikeList.setPrefSize(635, 310);
+            elanikeList.setLayoutY(20);
 
             linn.setOnSelectionChanged(event -> {
                 if (linn.isSelected()) {
@@ -501,10 +500,12 @@ public class Programm extends Application {
                 }
             });
 
+            Text abiLinn = new Text(5, 15, "Et näha rohkem infot ja rünnata, kliki tegelase peale kaks korda!");
+
             AnchorPane linnPane = new AnchorPane();
             linnPane.setMinWidth(650);
             linnPane.setMinHeight(400);
-            linnPane.getChildren().addAll(elanikeList);
+            linnPane.getChildren().addAll(abiLinn, elanikeList);
             linn.setContent(linnPane);
 
             // RÜNNAK
@@ -513,8 +514,6 @@ public class Programm extends Application {
             menuu.getTabs().add(linn);
 
             VBox peaVBox = new VBox(menuu);
-
-            //stseeni loomine ja naitamine
             Scene stseen = new Scene(peaVBox);
 
             peaLava.setScene(stseen);
