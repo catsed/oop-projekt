@@ -1,5 +1,6 @@
 package projekt.olendid;
 
+import javafx.scene.control.TextArea;
 import projekt.klassid.Klass;
 import projekt.rassid.Rass;
 
@@ -20,7 +21,7 @@ public class Tegelane extends Olend {
         this.sugu = sugu;
     }
 
-    public double runnak(double vastaseElud) {
+    public double runnak(double vastaseElud, TextArea valjund) {
         double elusidMaha = 0.0;
         String relv = klass.getRelv();
 
@@ -28,13 +29,14 @@ public class Tegelane extends Olend {
         List<String> laskeRelvad = Arrays.asList(Klass.LASKE_RELVAD);
         List<String> maagiaRelvad = Arrays.asList(Klass.MAAGIA_RELVAD);
 
-        System.out.printf("(%.1fHP) %s ründab, kasutades relva %s.\n", super.getElud(), super.getNimi(), klass.getRelv());
+        StringBuilder valjundStr = new StringBuilder();
+        valjundStr.append(String.format("%s ründab, kasutades relva %s.\n", super.getNimi(), klass.getRelv()));
 
         if (meleeRelvad.contains(relv)) { // rünnaku tugevus sõltub tegelase jõust või manast
             elusidMaha = rass.getJoud() / 2.0 * Math.random();
         } else if (laskeRelvad.contains(relv)) {
             if (Math.random() > rass.getTapsus() / 100.0) {
-                System.out.printf("(%.1fHP) %s lasi mööda.\n", super.getElud(), super.getNimi());
+                valjundStr.append(String.format("%s lasi mööda.\n", super.getNimi()));
             } else {
                 elusidMaha = rass.getJoud() / 2.0 * rass.getTapsus() / 100.0;
             }
@@ -45,23 +47,27 @@ public class Tegelane extends Olend {
         if (elusidMaha > vastaseElud)
             elusidMaha = vastaseElud;
 
-        System.out.printf("(%.1fHP) %s rünnak vähendab vastase elusid %.1f HP võrra.\n", super.getElud(), super.getNimi(), elusidMaha);
+        valjundStr.append(String.format("%s rünnak vähendab vastase elusid %.1f HP võrra.\n", super.getNimi(), elusidMaha));
 
+        valjund.setText(valjundStr + "\n" + valjund.getText());
         return vastaseElud - elusidMaha;
+    }
+
+    public String getProfiil() {
+        return "Sugu: " + sugu +
+                "\nVanus: " + vanus +
+                "\nRass: " + rass.toString() +
+                "\nKlass: " + klass.toString() +
+                "\nRelv: " + klass.getRelv() +
+                "\nElud: " + String.format("%.1f", super.getElud()) +
+                "\nMana: " + super.getMana() +
+                "\nJõud: " + super.getJoud() +
+                "\nKiirus: " + super.getKiirus() +
+                "\nTäpsus: " + super.getTapsus();
     }
 
     @Override
     public String toString() {
-        return super.getNimi() +
-                "\n\tSugu: " + sugu +
-                "\n\tVanus: " + vanus +
-                "\n\tRass: " + rass.toString() +
-                "\n\tKlass: " + klass.toString() +
-                "\n\tRelv: " + klass.getRelv() +
-                "\n\tElud: " + super.getElud() +
-                "\n\tMana: " + super.getMana() +
-                "\n\tJõud: " + super.getJoud() +
-                "\n\tKiirus: " + super.getKiirus() +
-                "\n\tTäpsus: " + super.getTapsus();
+        return super.getNimi() + " - " + sugu + ", " + vanus + " aastane; " + rass.toString() + ", " + klass.toString();
     }
 }

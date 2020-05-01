@@ -1,5 +1,7 @@
 package projekt.olendid;
 
+import javafx.scene.control.TextArea;
+
 abstract public class Olend {
     private double elud;
     private double mana;
@@ -54,5 +56,13 @@ abstract public class Olend {
         return nimi;
     }
 
-    public abstract double runnak(double vastaseElud);
+    public boolean isElus() {
+        return elus;
+    }
+    public void setElus(boolean elus) {
+        this.elus = elus;
+    }
+
+    public abstract double runnak(double vastaseElud, TextArea valjund);
+    public abstract String getProfiil();
 }
