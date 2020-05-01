@@ -185,7 +185,7 @@ public class Programm extends Application {
                                         e.printStackTrace();
                                     }
                                     vBox.getChildren().add(new Text("Sinu tegelase info: "));
-                                    vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\n" + tegelaseInfo.get(1) + "\n" + tegelaseInfo.get(2)+ "\nRass: " + rassStr+ "\n Klass: " + klassStr));
+                                    //vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\n" + tegelaseInfo.get(1) + "\n" + tegelaseInfo.get(2)+ "\nRass: " + rassStr+ "\n Klass: " + klassStr));
                                     Rass rass;
                                     switch(rassStr.toLowerCase()) { //rassi määramine
                                         case "inimene":
@@ -220,6 +220,8 @@ public class Programm extends Application {
                                             klass = new Klass("midagi on valesti");
                                             break;
                                     }
+                                    Tegelane mangija = new Tegelane(klass, rass, Integer.parseInt(tegelaseInfo.get(2).replace("Vanus: ", "")), ((tegelaseInfo.get(1)).replace("Sugu: ", "").equals("M") ? "Mees" : "Naine"), nimi);
+                                    vBox.getChildren().add(new Text(mangija.toString()));
                                 });
                             });
                         });
@@ -281,7 +283,7 @@ public class Programm extends Application {
                                 rida = bufferedReader.readLine();
                                 String klassStr = rida.replace("Klass: ", "");
                                 vBox.getChildren().add(new Text("Sinu tegelase info: "));
-                                vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\nSugu: " + sugu + "\nVanus: " + vanus+ "\nRass: " + rassStr+ "\n Klass: " + klassStr));
+                                //vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\nSugu: " + sugu + "\nVanus: " + vanus+ "\nRass: " + rassStr+ "\n Klass: " + klassStr));
                                 Rass rass;
                                 switch(rassStr.toLowerCase()) { //rassi määramine
                                     case "inimene":
@@ -316,6 +318,8 @@ public class Programm extends Application {
                                         klass = new Klass("midagi on valesti");
                                         break;
                                 }
+                                Tegelane mangija = new Tegelane(klass, rass, vanus, (sugu.equals("M") ? "Mees" : "Naine"), nimi);
+                                vBox.getChildren().add(new Text(mangija.toString()));
                                 break;
                             }
                             else{
