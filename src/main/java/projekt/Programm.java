@@ -4,6 +4,21 @@ package projekt;
 * Peaklass
  */
 
+
+import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import projekt.olendid.*;
 import projekt.klassid.*;
 import projekt.rassid.*;
@@ -11,9 +26,10 @@ import projekt.rassid.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Programm {
 
-    static Tegelane suvalineTegelane() { // meetod, mis genereerib suvalise tegelase
+public class Programm extends Application {
+
+    /*static Tegelane suvalineTegelane() { // meetod, mis genereerib suvalise tegelase
         Random random = new Random();
         String[] nimed = new String[]{"Icathmus", "Tuline", "Yuvia", "Trikos", "Umbra", "Iunas", "Jag", "Marik", "Tunis", "Pokin", "Galli"};
         String[] sood = new String[]{"Mees", "Naine"};
@@ -42,7 +58,69 @@ public class Programm {
         return false;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+     */
+
+    public void start(Stage primaryStage) {
+        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double korgus = primaryStage.getHeight();
+        });
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double laius = primaryStage.getWidth();
+        });
+
+        Group juur = new Group();
+        Text text, text1, text2;
+        text = new Text("Tere tulemast! See on Marki ja Saskia projekt.");
+        text1 = new Text("See on väike rollimäng, kus saad luua oma tegelase ning proovida ründamist." + "\n-----------------------------------------------\n");
+        text2 = new Text("Alustuseks, mis on sinu tegelase nimi?" );
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(text, text1, text2);
+
+
+        TextField tekst = new TextField();
+        vBox.getChildren().add(tekst);
+
+
+        tekst.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER){
+                String nimi = tekst.getText();
+                Text text3 = new Text("Tere, " + nimi + "!\n");
+                vBox.getChildren().add(text3);
+                vBox.getChildren().add(new Text("Mis on sinu tegelase sugu?"));
+                RadioButton radioButton, radioButton1;
+                radioButton = new RadioButton("Mees");
+                radioButton1 = new RadioButton("Naine");
+                ToggleGroup toggleGroup = new ToggleGroup();
+                radioButton.setToggleGroup(toggleGroup);
+                radioButton1.setToggleGroup(toggleGroup);
+                vBox.getChildren().addAll(radioButton,radioButton1);
+                radioButton.setOnAction(event1 -> {
+                    String sugu = "Mees";
+                    //System.out.println(sugu);
+                });
+                radioButton1.setOnAction(event12 -> {
+                    String sugu = "Naine";
+                    //System.out.println(sugu);
+                });
+
+            }
+
+        });
+
+        juur.getChildren().addAll(vBox);
+        Scene stseen = new Scene(juur, 535,535);
+        primaryStage.setScene(stseen);
+        primaryStage.setTitle("Projekt");
+        primaryStage.show();
+
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
+    /*public static void main(String[] args) throws InterruptedException {
         System.out.println("Tere tulemast! See on Marki ja Saskia projekt.");
         System.out.println("See on väike rollimäng, kus saad luua oma tegelase ning proovida ründamist.");
         System.out.println("-----------------------------------------------\n");
@@ -202,4 +280,6 @@ public class Programm {
         }
 
     }
+
+     */
 }
