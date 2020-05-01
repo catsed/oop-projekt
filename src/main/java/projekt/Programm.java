@@ -242,6 +242,8 @@ public class Programm extends Application {
                                 String rass = rida.replace("Rass: ", "");
                                 rida = bufferedReader.readLine();
                                 String klass = rida.replace("Klass: ", "");
+                                vBox.getChildren().add(new Text("Sinu tegelase info: "));
+                                vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\nSugu: " + sugu + "\nVanus: " + vanus+ "\nRass: " + rass+ "\n Klass: " + klass));
                                 break;
                             }
                             else{
