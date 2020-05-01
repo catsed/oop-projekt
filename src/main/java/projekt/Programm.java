@@ -26,8 +26,10 @@ import projekt.olendid.*;
 import projekt.klassid.*;
 import projekt.rassid.*;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 public class Programm extends Application {
@@ -63,7 +65,7 @@ public class Programm extends Application {
 
      */
 
-    public VBox kysimused(Stage primaryStage) {
+    public VBox kysimused(Stage primaryStage) throws IOException {
         Text text, text1, text2;
         text = new Text("Tere tulemast! See on Marki ja Saskia projekt.");
         text1 = new Text("See on väike rollimäng, kus saad luua oma tegelase ning proovida ründamist." + "\n-----------------------------------------------\n");
@@ -89,16 +91,7 @@ public class Programm extends Application {
                 radioButton.setToggleGroup(toggleGroup);
                 radioButton1.setToggleGroup(toggleGroup);
                 vBox.getChildren().addAll(radioButton, radioButton1);
-                /*radioButton.setOnAction(event1 -> {
-                    String sugu = "Mees";
-                    //System.out.println(sugu);
-                });
-                radioButton1.setOnAction(event12 -> {
-                    String sugu = "Naine";
-                    //System.out.println(sugu);
-                });
 
-                 */
                 toggleGroup.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
                     toggleGroup.getToggles().forEach(toggle -> {
                         Node node = (Node) toggle;
@@ -109,7 +102,7 @@ public class Programm extends Application {
                     slider.setShowTickMarks(true);
                     slider.setShowTickLabels(true);
                     slider.setBlockIncrement(10);
-                    Label label1 = new Label();
+                    Label label1 = new Label("Vanus: 0");
                     slider.valueProperty().addListener(
                             (observable, oldValue, newValue) -> label1.setText("Vanus: " + Math.round((Double) newValue)));
                     vBox.getChildren().addAll(slider, label1);
@@ -128,21 +121,6 @@ public class Programm extends Application {
                         Päkapikk.setToggleGroup(toggleGroup1);
                         vBox.getChildren().addAll(Inimene, Haldjas, Ork, Päkapikk);
 
-                        /*Inimene.setOnAction(event2 -> {
-                            String rass = "Inimene";
-                            System.out.println(rass);
-                        });
-                        Haldjas.setOnAction(event2 -> {
-                            String rass = "Haldjas";
-                        });
-                        Ork.setOnAction(event2 -> {
-                            String rass = "Ork";
-                        });
-                        Päkapikk.setOnAction(event2 -> {
-                            String rass = "Päkapikk";
-                        });
-
-                         */
                         toggleGroup1.selectedToggleProperty().addListener((ov1, old_toggle1, new_toggle1) -> {
                             toggleGroup1.getToggles().forEach(toggle -> {
                                 Node node = (Node) toggle;
@@ -159,20 +137,6 @@ public class Programm extends Application {
                             Maag.setToggleGroup(toggleGroup2);
                             vBox.getChildren().addAll(Sõdalane, Vibukütt, Maag);
 
-                            /*Inimene.setOnAction(event2 -> {
-                                String rass = "Inimene";
-                            });
-                            Haldjas.setOnAction(event2 -> {
-                                String rass = "Haldjas";
-                            });
-                            Ork.setOnAction(event2 -> {
-                                String rass = "Ork";
-                            });
-                            Päkapikk.setOnAction(event2 -> {
-                                String rass = "Päkapikk";
-                            });
-
-                             */
                             toggleGroup2.selectedToggleProperty().addListener((ov11, old_toggle11, new_toggle11) -> {
                                 toggleGroup2.getToggles().forEach(toggle -> {
                                     Node node = (Node) toggle;
@@ -187,7 +151,36 @@ public class Programm extends Application {
                                 vBox.getChildren().add(hBox);
                                 button1.setOnMousePressed(event2 -> {
                                     vBox.getChildren().clear();
-                                    start(primaryStage);
+                                    try {
+                                        start(primaryStage);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                                button.setOnMousePressed(event2 -> {
+                                    List<String> tegelaseInfo = new ArrayList<>();
+                                    tegelaseInfo.add("Nimi: "+nimi); // tegelase nimi [0]
+                                    if(String.valueOf(toggleGroup.getSelectedToggle()).contains("Naine"))
+                                        tegelaseInfo.add("Sugu: naine"); //tegelase sugu kui naine[1]
+                                    if(String.valueOf(toggleGroup.getSelectedToggle()).contains("Mees"))
+                                        tegelaseInfo.add("Sugu: mees"); //sugu kui mees [1]
+                                    tegelaseInfo.add(String.valueOf(label1.getText())); //vanus [2]
+                                    RadioButton rass = (RadioButton)toggleGroup1.getSelectedToggle();
+                                    tegelaseInfo.add("Rass: "+(rass.getText().split(" "))[0]); //rass [3]
+                                    RadioButton klass = (RadioButton)toggleGroup2.getSelectedToggle();
+                                    tegelaseInfo.add("Klass: "+(klass.getText().split(" "))[0]); //klass [4]
+                                    File file = new File("tegelased.txt");
+                                    try (BufferedWriter väljundvoog = new BufferedWriter(new FileWriter(file, true))) {
+                                        väljundvoog.write("-----------------\n");
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+                                        LocalDateTime now = LocalDateTime.now();
+                                        väljundvoog.write(dtf.format(now)+"\n");
+                                        for (String s : tegelaseInfo) {
+                                            väljundvoog.write(s + "\n");
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 });
                             });
                         });
@@ -199,7 +192,7 @@ public class Programm extends Application {
         return vBox;
     }
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
             double korgus = primaryStage.getHeight();
         });
