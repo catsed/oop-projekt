@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -102,13 +103,83 @@ public class Programm extends Application {
                     String sugu = "Naine";
                     //System.out.println(sugu);
                 });
+                toggleGroup.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+                    vBox.getChildren().add(new Text("Kui vana sinu tegelane on?"));
+                    Slider slider = new Slider(0,100,0);
+                    slider.setShowTickMarks(true);
+                    slider.setShowTickLabels(true);
+                    slider.setBlockIncrement(10);
+                    Label label1 = new Label();
+                    slider.valueProperty().addListener(
+                            (observable, oldValue, newValue) -> label1.setText("Vanus: " + Math.round((Double) newValue)));
+                    vBox.getChildren().addAll(slider,label1);
+                    slider.setOnMouseReleased(event1 -> {
+                        vBox.getChildren().add(new Text("\nHästi! Nüüd valime sinu rassi."));
+                        RadioButton Inimene, Haldjas, Ork, Päkapikk;
+                        Inimene = new RadioButton("Inimene - kõige tavalisem rass, võimete poolest kõiges keskmine, kuid mitte milleski parim.");
+                        Haldjas = new RadioButton("Haldjas - maagiline rass, võimete poolest parim maagias, jõu poolest nõrk.");
+                        Ork = new RadioButton("Ork - 'barbarite' rass, väga tugev, aga kõiges muus mitte eriti osav.");
+                        Päkapikk = new RadioButton("Päkapikk - terava mõistusega rass, imeline täpsus, kõiges muus mitte nii osav.\n");
+                        ToggleGroup toggleGroup1 = new ToggleGroup();
+                        Inimene.setToggleGroup(toggleGroup1);
+                        Haldjas.setToggleGroup(toggleGroup1);
+                        Ork.setToggleGroup(toggleGroup1);
+                        Päkapikk.setToggleGroup(toggleGroup1);
+                        vBox.getChildren().addAll(Inimene, Haldjas, Ork, Päkapikk);
 
-            }
+                        Inimene.setOnAction(event2 -> {
+                            String rass = "Inimene";
+                            System.out.println(rass);
+                        });
+                        Haldjas.setOnAction(event2 -> {
+                            String rass = "Haldjas";
+                        });
+                        Ork.setOnAction(event2 -> {
+                            String rass = "Ork";
+                        });
+                        Päkapikk.setOnAction(event2 -> {
+                            String rass = "Päkapikk";
+                        });
+                        toggleGroup1.selectedToggleProperty().addListener((ov1, old_toggle1, new_toggle1) -> {
+                            vBox.getChildren().add(new Text("\nHästi! Nüüd valime sinu klassi. Hoia meeles, milles sinu rass parim on!"));
+                            RadioButton Sõdalane, Vibukütt, Maag;
+                            Sõdalane = new RadioButton("Sõdalane - saab teha meleerünnakuid.");
+                            Vibukütt = new RadioButton("Vibukütt - saab teha laskerünnakuid.");
+                            Maag = new RadioButton("Maag - saab teha maagiarünnakuid.");
+                            ToggleGroup toggleGroup2 = new ToggleGroup();
+                            Sõdalane.setToggleGroup(toggleGroup2);
+                            Vibukütt.setToggleGroup(toggleGroup2);
+                            Maag.setToggleGroup(toggleGroup2);
+                            vBox.getChildren().addAll(Sõdalane, Vibukütt, Maag);
 
-        });
+                            Inimene.setOnAction(event2 -> {
+                                String rass = "Inimene";
+                            });
+                            Haldjas.setOnAction(event2 -> {
+                                String rass = "Haldjas";
+                            });
+                            Ork.setOnAction(event2 -> {
+                                String rass = "Ork";
+                            });
+                            Päkapikk.setOnAction(event2 -> {
+                                String rass = "Päkapikk";
+                            });
+                            toggleGroup2.selectedToggleProperty().addListener((ov11, old_toggle11, new_toggle11) -> {
+                                vBox.getChildren().add(new Text("\nHästi! Sinu tegelane on loodud!\n"));
+                                Button button = new Button("Edasi");
+                                vBox.getChildren().add(button);
+                            });
+                        });
+                    });
+
+                });
+                    }
+                });
 
         juur.getChildren().addAll(vBox);
-        Scene stseen = new Scene(juur, 535,535);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(juur);
+        Scene stseen = new Scene(scrollPane, 535,535);
         primaryStage.setScene(stseen);
         primaryStage.setTitle("Projekt");
         primaryStage.show();
