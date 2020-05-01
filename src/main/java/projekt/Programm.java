@@ -1,7 +1,7 @@
 package projekt;
 
 /*
-* Peaklass
+ * Peaklass
  */
 
 
@@ -12,11 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -61,19 +63,11 @@ public class Programm extends Application {
 
      */
 
-    public void start(Stage primaryStage) {
-        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
-            double korgus = primaryStage.getHeight();
-        });
-        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            double laius = primaryStage.getWidth();
-        });
-
-        Group juur = new Group();
+    public VBox kysimused(Stage primaryStage) {
         Text text, text1, text2;
         text = new Text("Tere tulemast! See on Marki ja Saskia projekt.");
         text1 = new Text("See on väike rollimäng, kus saad luua oma tegelase ning proovida ründamist." + "\n-----------------------------------------------\n");
-        text2 = new Text("Alustuseks, mis on sinu tegelase nimi?" );
+        text2 = new Text("Alustuseks, mis on sinu tegelase nimi?");
         VBox vBox = new VBox();
         vBox.getChildren().addAll(text, text1, text2);
 
@@ -81,9 +75,9 @@ public class Programm extends Application {
         TextField tekst = new TextField();
         vBox.getChildren().add(tekst);
 
-
         tekst.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER){
+            if (event.getCode() == KeyCode.ENTER) {
+                tekst.setDisable(true);
                 String nimi = tekst.getText();
                 Text text3 = new Text("Tere, " + nimi + "!\n");
                 vBox.getChildren().add(text3);
@@ -94,8 +88,8 @@ public class Programm extends Application {
                 ToggleGroup toggleGroup = new ToggleGroup();
                 radioButton.setToggleGroup(toggleGroup);
                 radioButton1.setToggleGroup(toggleGroup);
-                vBox.getChildren().addAll(radioButton,radioButton1);
-                radioButton.setOnAction(event1 -> {
+                vBox.getChildren().addAll(radioButton, radioButton1);
+                /*radioButton.setOnAction(event1 -> {
                     String sugu = "Mees";
                     //System.out.println(sugu);
                 });
@@ -103,17 +97,24 @@ public class Programm extends Application {
                     String sugu = "Naine";
                     //System.out.println(sugu);
                 });
+
+                 */
                 toggleGroup.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+                    toggleGroup.getToggles().forEach(toggle -> {
+                        Node node = (Node) toggle;
+                        node.setDisable(true);
+                    });
                     vBox.getChildren().add(new Text("Kui vana sinu tegelane on?"));
-                    Slider slider = new Slider(0,100,0);
+                    Slider slider = new Slider(0, 100, 0);
                     slider.setShowTickMarks(true);
                     slider.setShowTickLabels(true);
                     slider.setBlockIncrement(10);
                     Label label1 = new Label();
                     slider.valueProperty().addListener(
                             (observable, oldValue, newValue) -> label1.setText("Vanus: " + Math.round((Double) newValue)));
-                    vBox.getChildren().addAll(slider,label1);
+                    vBox.getChildren().addAll(slider, label1);
                     slider.setOnMouseReleased(event1 -> {
+                        slider.setDisable(true);
                         vBox.getChildren().add(new Text("\nHästi! Nüüd valime sinu rassi."));
                         RadioButton Inimene, Haldjas, Ork, Päkapikk;
                         Inimene = new RadioButton("Inimene - kõige tavalisem rass, võimete poolest kõiges keskmine, kuid mitte milleski parim.");
@@ -127,7 +128,7 @@ public class Programm extends Application {
                         Päkapikk.setToggleGroup(toggleGroup1);
                         vBox.getChildren().addAll(Inimene, Haldjas, Ork, Päkapikk);
 
-                        Inimene.setOnAction(event2 -> {
+                        /*Inimene.setOnAction(event2 -> {
                             String rass = "Inimene";
                             System.out.println(rass);
                         });
@@ -140,7 +141,13 @@ public class Programm extends Application {
                         Päkapikk.setOnAction(event2 -> {
                             String rass = "Päkapikk";
                         });
+
+                         */
                         toggleGroup1.selectedToggleProperty().addListener((ov1, old_toggle1, new_toggle1) -> {
+                            toggleGroup1.getToggles().forEach(toggle -> {
+                                Node node = (Node) toggle;
+                                node.setDisable(true);
+                            });
                             vBox.getChildren().add(new Text("\nHästi! Nüüd valime sinu klassi. Hoia meeles, milles sinu rass parim on!"));
                             RadioButton Sõdalane, Vibukütt, Maag;
                             Sõdalane = new RadioButton("Sõdalane - saab teha meleerünnakuid.");
@@ -152,7 +159,7 @@ public class Programm extends Application {
                             Maag.setToggleGroup(toggleGroup2);
                             vBox.getChildren().addAll(Sõdalane, Vibukütt, Maag);
 
-                            Inimene.setOnAction(event2 -> {
+                            /*Inimene.setOnAction(event2 -> {
                                 String rass = "Inimene";
                             });
                             Haldjas.setOnAction(event2 -> {
@@ -164,22 +171,49 @@ public class Programm extends Application {
                             Päkapikk.setOnAction(event2 -> {
                                 String rass = "Päkapikk";
                             });
+
+                             */
                             toggleGroup2.selectedToggleProperty().addListener((ov11, old_toggle11, new_toggle11) -> {
+                                toggleGroup2.getToggles().forEach(toggle -> {
+                                    Node node = (Node) toggle;
+                                    node.setDisable(true);
+                                });
                                 vBox.getChildren().add(new Text("\nHästi! Sinu tegelane on loodud!\n"));
-                                Button button = new Button("Edasi");
-                                vBox.getChildren().add(button);
+                                Button button, button1;
+                                button = new Button("Edasi");
+                                button1 = new Button("Alustan uuesti tegelase tegemist");
+                                HBox hBox = new HBox();
+                                hBox.getChildren().addAll(button, button1);
+                                vBox.getChildren().add(hBox);
+                                button1.setOnMousePressed(event2 -> {
+                                    vBox.getChildren().clear();
+                                    start(primaryStage);
+                                });
                             });
                         });
                     });
 
                 });
-                    }
-                });
+            }
+        });
+        return vBox;
+    }
 
+    public void start(Stage primaryStage) {
+        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double korgus = primaryStage.getHeight();
+        });
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double laius = primaryStage.getWidth();
+        });
+
+        VBox vBox = kysimused(primaryStage);
+
+        Group juur = new Group();
         juur.getChildren().addAll(vBox);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(juur);
-        Scene stseen = new Scene(scrollPane, 535,535);
+        Scene stseen = new Scene(scrollPane, 535, 535);
         primaryStage.setScene(stseen);
         primaryStage.setTitle("Projekt");
         primaryStage.show();
