@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-public class ProgrammFX extends Application {
+public class Programm extends Application {
 
     // https://stackoverflow.com/questions/17047000/javafx-closing-a-tab-in-tabpane-dynamically
     private static void closeTab(Tab tab) {
