@@ -181,7 +181,8 @@ public class Programm extends Application {
     }
 
     public void start(Stage peaLava) {
-        Tegelane[] mangija = { suvalineTegelane() };
+        Tegelane[] mangija = { suvalineTegelane() }; // kuna lambda funktsioonides on muutujate sättimine raskendatud,
+                                                     // on massiiv abiks wrapperina
 
         /////////////////////// LAVA ERALDI SÕNUMI EDASTAMISEKS
         Stage sonumLava = new Stage();
