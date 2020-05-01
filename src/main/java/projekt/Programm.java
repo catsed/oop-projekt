@@ -164,11 +164,13 @@ public class Programm extends Application {
 
                                     tegelaseInfo.add(String.valueOf(label1.getText())); //vanus [2]
 
-                                    RadioButton rass = (RadioButton)toggleGroup1.getSelectedToggle();
-                                    tegelaseInfo.add("Rass: "+(rass.getText().split(" "))[0]); //rass [3]
+                                    RadioButton rassB = (RadioButton)toggleGroup1.getSelectedToggle();
+                                    String rassStr = (rassB.getText().split(" "))[0];
+                                    tegelaseInfo.add("Rass: "+rassStr); //rass [3]
 
-                                    RadioButton klass = (RadioButton)toggleGroup2.getSelectedToggle();
-                                    tegelaseInfo.add("Klass: "+(klass.getText().split(" "))[0]); //klass [4]
+                                    RadioButton klassB = (RadioButton)toggleGroup2.getSelectedToggle();
+                                    String klassStr = (klassB.getText().split(" "))[0];
+                                    tegelaseInfo.add("Klass: "+klassStr); //klass [4]
 
                                     File file = new File("tegelased.txt");
                                     try (BufferedWriter väljundvoog = new BufferedWriter(new FileWriter(file, true))) {
@@ -181,6 +183,42 @@ public class Programm extends Application {
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
+                                    }
+                                    vBox.getChildren().add(new Text("Sinu tegelase info: "));
+                                    vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\n" + tegelaseInfo.get(1) + "\n" + tegelaseInfo.get(2)+ "\nRass: " + rassStr+ "\n Klass: " + klassStr));
+                                    Rass rass;
+                                    switch(rassStr.toLowerCase()) { //rassi määramine
+                                        case "inimene":
+                                            rass = new RassInimene();
+                                            break;
+                                        case "haldjas":
+                                            rass = new RassHaldjas();
+                                            break;
+                                        case "ork":
+                                            rass = new RassOrk();
+                                            break;
+                                        case "päkapikk":
+                                            rass = new RassPakapikk();
+                                            break;
+                                        default:
+                                            rass = new Rass("midagi on valesti");
+                                            break;
+                                    }
+
+                                    Klass klass;
+                                    switch(klassStr.toLowerCase()) { //klassi määramine
+                                        case "sõdalane":
+                                            klass = new KlassSodalane();
+                                            break;
+                                        case "vibukütt":
+                                            klass = new KlassVibukutt();
+                                            break;
+                                        case "maag":
+                                            klass = new KlassMaag();
+                                            break;
+                                        default:
+                                            klass = new Klass("midagi on valesti");
+                                            break;
                                     }
                                 });
                             });
@@ -239,11 +277,45 @@ public class Programm extends Application {
                                 rida = bufferedReader.readLine();
                                 int vanus = Integer.parseInt(rida.replace("Vanus: ", ""));
                                 rida = bufferedReader.readLine();
-                                String rass = rida.replace("Rass: ", "");
+                                String rassStr = rida.replace("Rass: ", "");
                                 rida = bufferedReader.readLine();
-                                String klass = rida.replace("Klass: ", "");
+                                String klassStr = rida.replace("Klass: ", "");
                                 vBox.getChildren().add(new Text("Sinu tegelase info: "));
-                                vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\nSugu: " + sugu + "\nVanus: " + vanus+ "\nRass: " + rass+ "\n Klass: " + klass));
+                                vBox.getChildren().addAll(new Text("Nimi: " + nimi + "\nSugu: " + sugu + "\nVanus: " + vanus+ "\nRass: " + rassStr+ "\n Klass: " + klassStr));
+                                Rass rass;
+                                switch(rassStr.toLowerCase()) { //rassi määramine
+                                    case "inimene":
+                                        rass = new RassInimene();
+                                        break;
+                                    case "haldjas":
+                                        rass = new RassHaldjas();
+                                        break;
+                                    case "ork":
+                                        rass = new RassOrk();
+                                        break;
+                                    case "päkapikk":
+                                        rass = new RassPakapikk();
+                                        break;
+                                    default:
+                                        rass = new Rass("midagi on valesti");
+                                        break;
+                                }
+
+                                Klass klass;
+                                switch(klassStr.toLowerCase()) { //klassi määramine
+                                    case "sõdalane":
+                                        klass = new KlassSodalane();
+                                        break;
+                                    case "vibukütt":
+                                        klass = new KlassVibukutt();
+                                        break;
+                                    case "maag":
+                                        klass = new KlassMaag();
+                                        break;
+                                    default:
+                                        klass = new Klass("midagi on valesti");
+                                        break;
+                                }
                                 break;
                             }
                             else{
